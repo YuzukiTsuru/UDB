@@ -5,9 +5,6 @@
 UTAU DEBUG ENGINE: UDB
 
 采用AckieSound的VocalShifter变换，还原你的原始声音
-|Github下载|镜像下载（蓝奏云）|
-|---|---|
-| [latest](https://github.com/YuzukiTsuru/UDB/releases/latest) | [latest](https://yuzukitsuru.lanzous.com/is0VNgdkgaf) |
 
 并且专治以下疑难杂症：
 
@@ -16,8 +13,6 @@ UTAU DEBUG ENGINE: UDB
 - 没有声音
 - 格式错误
 - 填词错误
-
-
 
 ### Flag：
 

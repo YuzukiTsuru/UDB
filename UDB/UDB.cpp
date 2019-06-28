@@ -63,8 +63,12 @@ int main(int argc, char* argv[]) {
 	// 输出变量
 	printf("参数个数：%d\n", argc);
 
-	if (argc != 14) {
+	if (argc != 14 && argc != 13) {
 		printf("输入错误，请检查相关参数");
+		for (int i = 0; i < argc; i++)
+		{
+			printf(" %s ", argv[i]);
+		}
 		pause();
 	}
 	else

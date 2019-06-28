@@ -18,21 +18,20 @@ UTAU DEBUG ENGINE
 
 
 
-```c++
-int noFormantFlg;			// noFormantFlg					("N",默认OFF)
-int genderFactor;			// 性别值[-20cent]				  ("g",-100～100,初始值0)
-int pitchShift;				// pitch微调[10cent]			   ("t",-240～240,初始值0)
-int pitchShift2;			// pitch微调[1cent]		       ("T",-2400～2400,初始值0)
-int peekCmp;				// 峰值限制 					  ("P",0～100,初始值86)
-int lowPassfilter;			// 低通道滤波器					 ("H",0～99,初始值0)
-int breathiness;			// 呼吸值						   ("B",0～100,初始值50)
-int brightness;				// 明亮值						   ("O",-100～100,初始值0)
-int clearness;				// Clear值						("S",-100～100,初始值0)
-int outputVshpFlg;			// 输出Vshp文件					  ("Z",初始值OFF)
-int reGenerateFrqFlg;		// 重新生成频率表				    ("V",初始值OFF)
-int disablePitchShift;		// PitchShift关闭				   ("W",基本值0)
-int ShowOption;				// Debug内容					   ("D",基本值0)
-```
+|---|---|
+noFormantFlg("N",默认OFF)
+性别值[-20cent]("g",-100～100,初始值0)
+pitch微调[10cent]("t",-240～240,初始值0)
+pitch微调[1cent]("T",-2400～2400,初始值0)
+峰值限制("P",0～100,初始值86)
+低通道滤波器("H",0～99,初始值0)
+呼吸值("B",0～100,初始值50)
+i明亮值("O",-100～100,初始值0)
+Clear值("S",-100～100,初始值0)
+输出Vshp文件("Z",初始值OFF)
+重新生成频率表("V",初始值OFF)
+PitchShift关闭("W",基本值0)
+Debug内容("D",基本值0)
 
 
 ### Reference

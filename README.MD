@@ -2,7 +2,7 @@
 
 UTAU DEBUG ENGINE
 
-采用AckieSound的VS变换，还原你的原始声音
+采用AckieSound的VocalShifter变换，还原你的原始声音
 
 并且专治以下疑难杂症：
 

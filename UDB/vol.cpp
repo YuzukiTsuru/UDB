@@ -211,10 +211,10 @@ int UDBOutputWaveFile(UDBOPTION* option)
 	if (fpOut != NULL) {
 		//创建头部
 		char header[44];
-		*(int*)(header + 0) = 0x46464952;	// "RIFF"
+		*(int*)(header + 0) = 0x46464952;	    // "RIFF"
 		*(int*)(header + 4) = 36 + datasize;	// 文件大小- 8
-		*(int*)(header + 8) = 0x45564157;	// "WAVE"
-		*(int*)(header + 12) = 0x20746d66;	// "fmt "
+		*(int*)(header + 8) = 0x45564157;	    // "WAVE"
+		*(int*)(header + 12) = 0x20746d66;	    // "fmt "
 		*(int*)(header + 16) = 16;
 		*(short*)(header + 20) = (short)WAVE_FORMAT_PCM;
 		*(short*)(header + 22) = (short)channel;
@@ -222,10 +222,10 @@ int UDBOutputWaveFile(UDBOPTION* option)
 		*(int*)(header + 28) = sampFreq * channel * (bit / 8);
 		*(short*)(header + 32) = (short)(channel * (bit / 8));
 		*(short*)(header + 34) = (short)bit;
-		*(int*)(header + 36) = 0x61746164;	// "data"
-		*(int*)(header + 40) = datasize;		// datasize
+		*(int*)(header + 36) = 0x61746164;	   // "data"
+		*(int*)(header + 40) = datasize;	   // datasize
 
-												// 标头写入
+											   // 标头写入
 		fseek(fpOut, 0, SEEK_SET);
 		fwrite(header, sizeof(char), 44, fpOut);
 
@@ -237,7 +237,9 @@ int UDBOutputWaveFile(UDBOPTION* option)
 		fclose(fpOut);
 	}
 	else {
-		printf("UDB:啊啊啊啊啊！！文件输出错误惹QAQ\n");
+		SetColor(12);
+		printf("UDB:啊啊啊啊啊！！文件输出错误了QAQ\n");
+		SetColor(15);
 		system("pause");
 		retVal = 1;
 	}

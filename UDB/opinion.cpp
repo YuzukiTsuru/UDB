@@ -75,15 +75,15 @@ int UDBGetOption(int argc, char* argv[], UDBOPTION* option)
 
 	// 独立频率表文件名设置
 	strcpy_s(option->GfrqFile, UDB_MAX_PATH, option->inputWaveFile);
-	AddExtStr(option->GfrqFile, UDB_MAX_PATH, ".Gfrq");
+	AddExtStr(option->GfrqFile, UDB_MAX_PATH, (char*)".Gfrq");
 
 	// 标准频率表文件名设置
 	strcpy_s(option->frqFile, UDB_MAX_PATH, option->inputWaveFile);
-	AddExtStr(option->frqFile, UDB_MAX_PATH, ".frq");
+	AddExtStr(option->frqFile, UDB_MAX_PATH, (char*)".frq");
 
 	// 项目文件名设置
 	strcpy_s(option->gFile, UDB_MAX_PATH, option->outputWaveFile);
-	AddExtStr(option->gFile, UDB_MAX_PATH, ".vshp");
+	AddExtStr(option->gFile, UDB_MAX_PATH, (char*)".vshp");
 
 	return 0;
 }

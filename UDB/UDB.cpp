@@ -24,7 +24,7 @@ int main(int argc, char* argv[]) {
 
 	// ¿´´úÂë¾Í¶®
 	if (argc <= 1) {
-		SetColor(6);
+		SetColor(1);
 		printf(" -------------------------------\n");
 		printf("|         UDB ver 0.0.1         |\n");
 		printf("| Copyright(C) 2019 GloomyGhost |\n");

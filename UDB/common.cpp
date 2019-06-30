@@ -134,6 +134,15 @@ int CheckFileExist(char* fileName)
 //
 // ¸ÅÒª
 //  ÉèÖÃ¿ØÖÆÌ¨ÑÕÉ«
+//  0 - BLACK ºÚ          
+//  1 - BLUE À¶              2 - GREEN ÂÌ
+//  3 - CYAN Çà              4 - RED ºì
+//  5 - MAGENTA Ñóºì         6 - BROWN ×Ø
+//  7 - LIGHTGRAY µ­»Ò       8 - DARKGRAY Éî»Ò
+//  9 - LIGHTBLUE µ­À¼       10 - LIGHTGREEN µ­ÂÌ
+//  11 - LIGHTCYAN µ­Çà      12 - LIGHTRED µ­ºì
+//  13 - LIGHTMAGENTA µ­Ñóºì 14 - YELLOW »Æ
+//  15 - WHITE °×
 //--------------------------------------------------------------
 void SetColor(unsigned short color_index)
 {

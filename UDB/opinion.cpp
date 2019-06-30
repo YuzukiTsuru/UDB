@@ -402,18 +402,17 @@ int UDBSetPitchBendOption(char* argv[], UDBOPTION * option)
 	if (option->ShowOption == 1) {
 		SetColor(9);
 		printf("\n\n");
-		printf("输入文件:%s\n", option->inputWaveFile);
-		printf("输出文件:%s\n", option->outputWaveFile);
-		printf("输出音阶:%d\n", option->noteNum);
-		printf("offset:%f\n", option->offset);
-		printf("要求长:%f\n", option->reqLength);
-		printf("子音:%f\n", option->fixedLength);
-		printf("空白:%f\n", option->endBlank);
-		printf("子音速度:%f\n", option->fixSpeed);
-		printf("音量:%f\n", option->volume);
-		printf("调幅度:%f\n", option->modulation);
-		printf("\n");
-		printf("\n");
+		printf("输入文件      ：%s\n", option->inputWaveFile);
+		printf("输出文件      ：%s\n", option->outputWaveFile);
+		printf("输出音阶      ：%d\n", option->noteNum);
+		printf("offset        ：%f\n", option->offset);
+		printf("要求长        ：%f\n", option->reqLength);
+		printf("子音          ：%f\n", option->fixedLength);
+		printf("空白          ：%f\n", option->endBlank);
+		printf("BPM           ：%f\n", option->fixSpeed);
+		printf("音量          ：%f\n", option->volume);
+		printf("调幅度        ：%f\n", option->modulation);
+		printf("\n\n");
 		SetColor(15);
 	}
 

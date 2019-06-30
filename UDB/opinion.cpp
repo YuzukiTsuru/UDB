@@ -400,6 +400,7 @@ int UDBSetPitchBendOption(char* argv[], UDBOPTION * option)
 
 	// 内容表示（debug）
 	if (option->ShowOption == 1) {
+		SetColor(9);
 		printf("\n\n");
 		printf("输入文件:%s\n", option->inputWaveFile);
 		printf("输出文件:%s\n", option->outputWaveFile);
@@ -413,6 +414,7 @@ int UDBSetPitchBendOption(char* argv[], UDBOPTION * option)
 		printf("调幅度:%f\n", option->modulation);
 		printf("\n");
 		printf("\n");
+		SetColor(15);
 	}
 
 	// 数据数设置

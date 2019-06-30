@@ -143,7 +143,9 @@ HVSPRJ UDBLoadProject(UDBOPTION * option)
 
 	// WAVE文件存在检查
 	if (CheckFileExist(option->inputWaveFile) == 0) {
+		SetColor(12);
 		printf("UDB:哇！我没有在音源里找到这个发音，我没办法生成了啦QAQ,缺少的发音是:%s\n", option->inputWaveFile);
+		SetColor(15);
 		if (option->ShowOption == 1) {
 			system("pause");
 		}
@@ -167,7 +169,9 @@ HVSPRJ UDBLoadProject(UDBOPTION * option)
 			// 读取自己的频率表
 			sta = VslibOpenProject(&hVsprj, option->GfrqFile);
 			if (sta != VSERR_NOERR) {
+				SetColor(12);
 				printf("UDB:我在读取我自己的Gfrq的时候发现好像频率表错误了，Master检查下吧！或者删了频率表我重新生成一个OwO\n");
+				SetColor(15);
 				if (option->ShowOption == 1) {
 					system("pause");
 				}
@@ -178,12 +182,16 @@ HVSPRJ UDBLoadProject(UDBOPTION * option)
 
 	if (existVsfrqFlg == 0) {
 		// 创建独自的频率表（Gfrq）
+		SetColor(11);
 		printf("UDB:创建UDB自己用的一个小频率表OwO\n");
+		SetColor(15);
 
 		// 创建项目
 		sta = VslibCreateProject(&hVsprj);
 		if (sta != VSERR_NOERR) {
+			SetColor(12);
 			printf("UDB:哇，居然初始化错误，我也不知道什么原因，好难受\n");
+			SetColor(15);
 			if (option->ShowOption == 1) {
 				system("pause");
 			}
@@ -194,7 +202,9 @@ HVSPRJ UDBLoadProject(UDBOPTION * option)
 		int itemNum;
 		sta = VslibAddItemEx(hVsprj, option->inputWaveFile, &itemNum, 36, 48, 0);
 		if (sta != VSERR_NOERR) {
+			SetColor(12);
 			printf("UDB:文件输入错误了QAQ\n");
+			SetColor(15);
 			if (option->ShowOption == 1) {
 				system("pause");
 			}
@@ -209,14 +219,18 @@ HVSPRJ UDBLoadProject(UDBOPTION * option)
 		// 独立频率表保存
 		sta = VslibSaveProject(hVsprj, option->GfrqFile);
 		if (sta != VSERR_NOERR) {
+			SetColor(12);
 			printf("UDB:哇。。保存频率表失败惹，Master帮我检查下呗QAQ(可能是文件夹没有写入权限导致的）\n");
+			SetColor(15);
 			if (option->ShowOption == 1) {
 				system("pause");
 			}
 		}
 		else
 		{
+			SetColor(11);
 			printf("UDB:耶！保存频率表成功了OwO\n");
+			SetColor(15);
 		}
 	}
 
@@ -265,7 +279,9 @@ int UDBLoadFrqFile(HVSPRJ hVsprj, UDBOPTION * option)
 		// 频率数据
 		FREQDATA* freqData = (FREQDATA*)calloc(nData, sizeof(FREQDATA));
 		if (freqData == nullptr) {
-			printf("读取频率表错误！终止。\n");
+			SetColor(12);
+			printf("读取频率表错误！终止。QAQ\n");
+			SetColor(15);
 			if (option->ShowOption == 1) {
 				system("pause");
 			}

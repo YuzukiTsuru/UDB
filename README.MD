@@ -4,6 +4,8 @@ UTAU DEBUG ENGINE
 
 采用AckieSound的VocalShifter变换，还原你的原始声音
 
+[下载地址](https://github.com/GloomyGhost-MosquitoSeal/UDB/releases/latest)
+
 并且专治以下疑难杂症：
 
 - 不出声
@@ -26,7 +28,7 @@ pitch微调[1cent] | ("T",-2400～2400,初始值0)
 峰值限制 | ("P",0～100,初始值86)
 低通道滤波器 | ("H",0～99,初始值0)
 呼吸值 | ("B",0～100,初始值50)
-i明亮值 | ("O",-100～100,初始值0)
+明亮值 | ("O",-100～100,初始值0)
 Clear值 | ("S",-100～100,初始值0)
 输出Vshp文件 | ("Z",初始值OFF)
 重新生成频率表 | ("V",初始值OFF)

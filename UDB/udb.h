@@ -66,6 +66,7 @@ double LimitDoubleValue(double value, double min, double max);
 int LimitIntValue(int value, int min, int max);
 void AddExtStr(char* dstStr, int dstSize, char* extStr);
 int CheckFileExist(char* fileName);
+void SetColor(unsigned short color_index);
 
 // Option
 int UDBGetOption(int argc, char* argv[], UDBOPTION* option);

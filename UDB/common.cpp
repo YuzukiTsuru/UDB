@@ -121,3 +121,21 @@ int CheckFileExist(char* fileName)
 
 	return existFlg;
 }
+
+
+//--------------------------------------------------------------
+// 设置控制台颜色
+//
+// 引数
+//  unsigned short color_index 颜色名
+//
+// 返回
+//  无
+//
+// 概要
+//  设置控制台颜色
+//--------------------------------------------------------------
+void SetColor(unsigned short color_index)
+{
+	SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), color_index);
+}

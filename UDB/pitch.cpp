@@ -265,7 +265,7 @@ int UDBLoadFrqFile(HVSPRJ hVsprj, UDBOPTION * option)
 		// 频率数据
 		FREQDATA* freqData = (FREQDATA*)calloc(nData, sizeof(FREQDATA));
 		if (freqData == nullptr) {
-			printf("读取频率表错误！终止。");
+			printf("读取频率表错误！终止。\n");
 			if (option->ShowOption == 1) {
 				system("pause");
 			}

@@ -1,4 +1,4 @@
-ï»¿#include <iostream>
+#include <iostream>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -18,53 +18,54 @@ void pause() {
 
 
 //--------------------------------------------------------------
-// ä¸»è¦å†…å®¹
+// Ö÷ÒªÄÚÈİ
 //--------------------------------------------------------------
 int main(int argc, char* argv[]) {
 
-	// çœ‹ä»£ç å°±æ‡‚
+	// ¿´´úÂë¾Í¶®
 	if (argc <= 1) {
+		SetColor(6);
 		printf(" -------------------------------\n");
 		printf("|         UDB ver 0.0.1         |\n");
 		printf("| Copyright(C) 2019 GloomyGhost |\n");
 		printf("| Copyright(C) 2014 AckieSound  |\n");
 		printf(" -------------------------------\n");
-		printf("|    è¯·é—®æ˜¯åœ¨UTAUå†…è¿è¡Œäº†å—ï¼Ÿ   |\n");
-		printf("|    UDBåªèƒ½åœ¨UTAUé‡Œè°ƒç”¨å“¦OwO   |\n");
+		printf("|    ÇëÎÊÊÇÔÚUTAUÄÚÔËĞĞÁËÂğ£¿   |\n");
+		printf("|    UDBÖ»ÄÜÔÚUTAUÀïµ÷ÓÃÅ¶OwO   |\n");
 		printf(" -------------------------------\n");
 		pause();
 		return -1;
 	}
 
 
-	// å¼€å§‹æ—¶é—´è·å–
+	// ¿ªÊ¼Ê±¼ä»ñÈ¡
 	ULONGLONG time_start = GetTickCount64();
 
 
-	// é€‰é¡¹è®¾ç½®
+	// Ñ¡ÏîÉèÖÃ
 	UDBOPTION option;
 	if (UDBGetOption(argc, argv, &option) != 0) {
 		return 0;
 	}
 
-	// é—´è·ï¼Œæ—¶é—´ï¼Œä¼¸å±•
+	// ¼ä¾à£¬Ê±¼ä£¬ÉìÕ¹
 	if (UDBStep1(&option) != 0) {
 		return 0;
 	}
 
-	// è¿‡æ»¤å™¨ã€éŸ³é‡
+	// ¹ıÂËÆ÷¡¢ÒôÁ¿
 	if (UDBStep2(&option) != 0) {
 		return 0;
 	}
 
 
-	// å®Œæˆæ—¶é—´è·å–
+	// Íê³ÉÊ±¼ä»ñÈ¡
 	ULONGLONG time_end = GetTickCount64();
-	// è¾“å‡ºå˜é‡
-	printf("å‚æ•°ä¸ªæ•°ï¼š%d\n", argc);
+	// Êä³ö±äÁ¿
+	printf("²ÎÊı¸öÊı£º%d\n", argc);
 
 	if (argc != 14 && argc != 13) {
-		printf("è¾“å…¥é”™è¯¯ï¼Œè¯·æ£€æŸ¥ç›¸å…³å‚æ•°");
+		printf("ÊäÈë´íÎó£¬Çë¼ì²éÏà¹Ø²ÎÊı\n");
 		for (int i = 0; i < argc; i++)
 		{
 			printf(" %s ", argv[i]);
@@ -73,19 +74,19 @@ int main(int argc, char* argv[]) {
 	}
 	else
 	{
-		printf("å‚æ•°æ­£ç¡®ï¼Œæ­£åœ¨åˆæˆOwO\n");
+		printf("²ÎÊıÕıÈ·£¬ÕıÔÚºÏ³ÉOwO\n");
 	}
 
-	// è¾“å‡ºéŸ³é¢‘ä¿¡æ¯
-	printf("\nè¾“å…¥éŸ³æºæ–‡ä»¶ï¼š%s", argv[1]);
-	printf("\nè¾“å‡ºéŸ³æºæ–‡ä»¶ï¼š%s", argv[2]);
-	printf("\néŸ³é«˜        ï¼š%s", argv[3]);
-	printf("\nFLAG        ï¼š%s", argv[5]);
-	printf("\nOTO         ï¼š%s %s %s %s", argv[6], argv[7], argv[8], argv[9]);
+	// Êä³öÒôÆµĞÅÏ¢
+	printf("\nÊäÈëÒôÔ´ÎÄ¼ş£º%s", argv[1]);
+	printf("\nÊä³öÒôÔ´ÎÄ¼ş£º%s", argv[2]);
+	printf("\nÒô¸ß        £º%s", argv[3]);
+	printf("\nFLAG        £º%s", argv[5]);
+	printf("\nOTO         £º%s %s %s %s", argv[6], argv[7], argv[8], argv[9]);
 
-	// è¡¨ç¤ºæ—¶é—´
+	// ±íÊ¾Ê±¼ä
 	printf("\n");
-	printf("\nUDB:å¤„ç†å®ŒæˆOwOï¼Œæ—¶é•¿:%I64ums\n", time_end - time_start);
+	printf("\nUDB:´¦ÀíÍê³ÉOwO£¬Ê±³¤:%I64ums\n", time_end - time_start);
 	printf("\n");
 	return 0;
 }

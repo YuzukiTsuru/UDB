@@ -43,11 +43,6 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <None Include="vslib.dll">
-      <Filter>资源文件</Filter>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
     <ResourceCompile Include="UDB.rc">
       <Filter>资源文件</Filter>
     </ResourceCompile>
@@ -58,8 +53,13 @@
     </Image>
   </ItemGroup>
   <ItemGroup>
+    <CopyFileToFolders Include="vslib.dll">
+      <Filter>头文件</Filter>
+    </CopyFileToFolders>
+  </ItemGroup>
+  <ItemGroup>
     <Library Include="vslib.lib">
-      <Filter>资源文件</Filter>
+      <Filter>头文件</Filter>
     </Library>
   </ItemGroup>
 </Project>

@@ -1,8 +1,6 @@
-
 //--------------------------------------------------------------
 // VocalShifter - VSLIB
 //--------------------------------------------------------------
-
 #ifndef _VSLIB_H_
 #define _VSLIB_H_
 
@@ -17,7 +15,6 @@
 //--------------------------------------------------------------
 // マクロ定義
 //--------------------------------------------------------------
-
 #define VSLIB_MAX_PATH		(256)
 #define VSLIB_MAX_TRACK		(64)	// トラック最大数
 #define VSLIB_MAX_ITEM		(1024)	// アイテム最大数
@@ -60,13 +57,13 @@ typedef struct HVSPRJ__ { int unused; } *HVSPRJ;
 //--------------------------------------------------------------
 
 // プロジェクト情報
-typedef struct {
+typedef struct{
 	double masterVolume;	// (R/W) マスターボリューム[倍]
 	int sampFreq;			// (R/W) サンプリング周波数[Hz]
 } VSPRJINFO;
 
 // トラック情報
-typedef struct {
+typedef struct{
 	double volume;			// (R/W) ボリューム[倍]
 	double pan;				// (R/W) パン(-1.0～1.0)
 	int invPhaseFlg;		// (R/W) 逆相フラグ
@@ -75,7 +72,7 @@ typedef struct {
 } VSTRACKINFO;
 
 // アイテム情報
-typedef struct {
+typedef struct{
 	char fileName[VSLIB_MAX_PATH];	// (R/-) ファイル名
 	int sampFreq;			// (R/-) サンプリング周波数[Hz]
 	int channel;			// (R/-) チャンネル数
@@ -89,7 +86,7 @@ typedef struct {
 } VSITEMINFO;
 
 // アイテム制御点情報
-typedef struct {
+typedef struct{
 	double dynOrg;			// (R/-) 編集前ダイナミクス[倍]
 	double dynEdit;			// (R/W) 編集後ダイナミクス[倍]
 	double volume;			// (R/W) ボリューム[倍]
@@ -107,7 +104,7 @@ typedef struct {
 } VSCPINFOEX;
 
 // ASAnalyzer AWDINFO構造体
-typedef struct {
+typedef struct{
 	int wavdatasize;	// データのサイズ[サンプル]
 	int wavsampleps;	// サンプリング周波数[Hz]
 	int wavbit;			// ビット数(8or16)
@@ -125,80 +122,78 @@ typedef struct {
 //--------------------------------------------------------------
 
 // ライブラリ
-VSLIB_IMPORT int __stdcall VslibGetVersion(void);
+VSLIB_IMPORT int __stdcall VslibGetVersion( void );
 
 // プロジェクト
-VSLIB_IMPORT int __stdcall VslibCreateProject(HVSPRJ* hVsprj);
-VSLIB_IMPORT int __stdcall VslibOpenProject(HVSPRJ* hVsprj, char* fileName);
-VSLIB_IMPORT int __stdcall VslibSaveProject(HVSPRJ hVsprj, char* fileName);
-VSLIB_IMPORT int __stdcall VslibDeleteProject(HVSPRJ hVsprj);
-VSLIB_IMPORT int __stdcall VslibGetProjectInfo(HVSPRJ hVsprj, VSPRJINFO* vsPrjInfo);
-VSLIB_IMPORT int __stdcall VslibSetProjectInfo(HVSPRJ hVsprj, VSPRJINFO* vsPrjInfo);
+VSLIB_IMPORT int __stdcall VslibCreateProject( HVSPRJ *hVsprj );
+VSLIB_IMPORT int __stdcall VslibOpenProject( HVSPRJ *hVsprj, const char *fileName );
+VSLIB_IMPORT int __stdcall VslibSaveProject( HVSPRJ hVsprj, const char *fileName );
+VSLIB_IMPORT int __stdcall VslibDeleteProject( HVSPRJ hVsprj );
+VSLIB_IMPORT int __stdcall VslibGetProjectInfo( HVSPRJ hVsprj, VSPRJINFO *vsPrjInfo );
+VSLIB_IMPORT int __stdcall VslibSetProjectInfo( HVSPRJ hVsprj, VSPRJINFO *vsPrjInfo );
 
 // トラック
-VSLIB_IMPORT int __stdcall VslibGetTrackMaxNum(HVSPRJ hVsprj, int* trackMaxNum);
-VSLIB_IMPORT int __stdcall VslibAddTrack(HVSPRJ hVsprj);
-VSLIB_IMPORT int __stdcall VslibCopyTrack(HVSPRJ hVsprjDst, int* trackNumDst, HVSPRJ hVsprjSrc, int trackNumsrc);
-VSLIB_IMPORT int __stdcall VslibUpTrack(HVSPRJ hVsprj, int trackNum);
-VSLIB_IMPORT int __stdcall VslibDownTrack(HVSPRJ hVsprj, int trackNum);
-VSLIB_IMPORT int __stdcall VslibDeleteTrack(HVSPRJ hVsprj, int trackNum);
-VSLIB_IMPORT int __stdcall VslibGetTrackInfo(HVSPRJ hVsprj, int trackNum, VSTRACKINFO* vsTrackInfo);
-VSLIB_IMPORT int __stdcall VslibSetTrackInfo(HVSPRJ hVsprj, int trackNum, VSTRACKINFO* vsTrackInfo);
+VSLIB_IMPORT int __stdcall VslibGetTrackMaxNum( HVSPRJ hVsprj, int *trackMaxNum );
+VSLIB_IMPORT int __stdcall VslibAddTrack( HVSPRJ hVsprj );
+VSLIB_IMPORT int __stdcall VslibCopyTrack( HVSPRJ hVsprjDst, int *trackNumDst, HVSPRJ hVsprjSrc, int trackNumsrc );
+VSLIB_IMPORT int __stdcall VslibUpTrack( HVSPRJ hVsprj, int trackNum );
+VSLIB_IMPORT int __stdcall VslibDownTrack( HVSPRJ hVsprj, int trackNum );
+VSLIB_IMPORT int __stdcall VslibDeleteTrack( HVSPRJ hVsprj, int trackNum );
+VSLIB_IMPORT int __stdcall VslibGetTrackInfo( HVSPRJ hVsprj, int trackNum, VSTRACKINFO *vsTrackInfo );
+VSLIB_IMPORT int __stdcall VslibSetTrackInfo( HVSPRJ hVsprj, int trackNum, VSTRACKINFO *vsTrackInfo );
 
 // アイテム
-VSLIB_IMPORT int __stdcall VslibGetItemMaxNum(HVSPRJ hVsprj, int* itemMaxNum);
-VSLIB_IMPORT int __stdcall VslibAddItem(HVSPRJ hVsprj, char* fileName, int* itemNum);
-VSLIB_IMPORT int __stdcall VslibAddItemEx(HVSPRJ hVsprj, char* fileName, int* itemNum,
-	int nnOffset, int nnRange, int skipPitFlg);
-VSLIB_IMPORT int __stdcall VslibCopyItem(HVSPRJ hVsprjDst, int* itemNumDst, HVSPRJ hVsprjSrc, int itemNumSrc);
-VSLIB_IMPORT int __stdcall VslibDeleteItem(HVSPRJ hVsprj, int itemNum);
-VSLIB_IMPORT int __stdcall VslibGetItemInfo(HVSPRJ hVsprj, int itemNum, VSITEMINFO* vsItemInfo);
-VSLIB_IMPORT int __stdcall VslibSetItemInfo(HVSPRJ hVsprj, int itemNum, VSITEMINFO* vsItemInfo);
-VSLIB_IMPORT int __stdcall VslibGetCtrlPntInfoEx(HVSPRJ hVsprj, int itemNum, int pntNum, VSCPINFOEX* vsCpInfo);
-VSLIB_IMPORT int __stdcall VslibSetCtrlPntInfoEx(HVSPRJ hVsprj, int itemNum, int pntNum, VSCPINFOEX* vsCpInfo);
+VSLIB_IMPORT int __stdcall VslibGetItemMaxNum( HVSPRJ hVsprj, int *itemMaxNum );
+VSLIB_IMPORT int __stdcall VslibAddItem( HVSPRJ hVsprj, const char *fileName, int *itemNum );
+VSLIB_IMPORT int __stdcall VslibAddItemEx( HVSPRJ hVsprj, const char *fileName, int *itemNum,
+									int nnOffset, int nnRange, int skipPitFlg );
+VSLIB_IMPORT int __stdcall VslibCopyItem( HVSPRJ hVsprjDst, int *itemNumDst, HVSPRJ hVsprjSrc, int itemNumSrc );
+VSLIB_IMPORT int __stdcall VslibDeleteItem( HVSPRJ hVsprj, int itemNum );
+VSLIB_IMPORT int __stdcall VslibGetItemInfo( HVSPRJ hVsprj, int itemNum, VSITEMINFO *vsItemInfo );
+VSLIB_IMPORT int __stdcall VslibSetItemInfo( HVSPRJ hVsprj, int itemNum, VSITEMINFO *vsItemInfo );
+VSLIB_IMPORT int __stdcall VslibGetCtrlPntInfoEx( HVSPRJ hVsprj, int itemNum, int pntNum, VSCPINFOEX *vsCpInfo );
+VSLIB_IMPORT int __stdcall VslibSetCtrlPntInfoEx( HVSPRJ hVsprj, int itemNum, int pntNum, VSCPINFOEX *vsCpInfo );
 
-VSLIB_IMPORT int __stdcall VslibGetEQGain(HVSPRJ hVsprj, int itemNum, int eqNum, int* gain);
-VSLIB_IMPORT int __stdcall VslibSetEQGain(HVSPRJ hVsprj, int itemNum, int eqNum, int* gain);
+VSLIB_IMPORT int __stdcall VslibGetEQGain( HVSPRJ hVsprj, int itemNum, int eqNum, int *gain );
+VSLIB_IMPORT int __stdcall VslibSetEQGain( HVSPRJ hVsprj, int itemNum, int eqNum, int *gain );
 
 // タイミング
-VSLIB_IMPORT int __stdcall VslibGetTimeCtrlPntNum(HVSPRJ hVsprj, int itemNum, int* timeCtrlPntNum);
-VSLIB_IMPORT int __stdcall VslibGetTimeCtrlPnt(HVSPRJ hVsprj, int itemNum, int pntNum, int* time1, int* time2);
-VSLIB_IMPORT int __stdcall VslibSetTimeCtrlPnt(HVSPRJ hVsprj, int itemNum, int pntNum, int time1, int time2);
-VSLIB_IMPORT int __stdcall VslibAddTimeCtrlPnt(HVSPRJ hVsprj, int itemNum, int time1, int time2);
-VSLIB_IMPORT int __stdcall VslibDeleteTimeCtrlPnt(HVSPRJ hVsprj, int itemNum, int pntNum);
+VSLIB_IMPORT int __stdcall VslibGetTimeCtrlPntNum( HVSPRJ hVsprj, int itemNum, int *timeCtrlPntNum );
+VSLIB_IMPORT int __stdcall VslibGetTimeCtrlPnt( HVSPRJ hVsprj, int itemNum, int pntNum, int *time1, int *time2 );
+VSLIB_IMPORT int __stdcall VslibSetTimeCtrlPnt( HVSPRJ hVsprj, int itemNum, int pntNum, int time1, int time2 );
+VSLIB_IMPORT int __stdcall VslibAddTimeCtrlPnt( HVSPRJ hVsprj, int itemNum, int time1, int time2 );
+VSLIB_IMPORT int __stdcall VslibDeleteTimeCtrlPnt( HVSPRJ hVsprj, int itemNum, int pntNum );
 
-VSLIB_IMPORT int __stdcall VslibGetStretchOrgSec(HVSPRJ hVsprj, int itemNum, double time_edt, double* time_org);
-VSLIB_IMPORT int __stdcall VslibGetStretchEditSec(HVSPRJ hVsprj, int itemNum, double time_org, double* time_edt);
-VSLIB_IMPORT int __stdcall VslibGetStretchOrgSample(HVSPRJ hVsprj, int itemNum, double time_edt, double* time_org);
-VSLIB_IMPORT int __stdcall VslibGetStretchEditSample(HVSPRJ hVsprj, int itemNum, double time_org, double* time_edt);
+VSLIB_IMPORT int __stdcall VslibGetStretchOrgSec( HVSPRJ hVsprj, int itemNum, double time_edt, double *time_org );
+VSLIB_IMPORT int __stdcall VslibGetStretchEditSec( HVSPRJ hVsprj, int itemNum, double time_org, double *time_edt );
+VSLIB_IMPORT int __stdcall VslibGetStretchOrgSample( HVSPRJ hVsprj, int itemNum, double time_edt, double *time_org );
+VSLIB_IMPORT int __stdcall VslibGetStretchEditSample( HVSPRJ hVsprj, int itemNum, double time_org, double *time_edt );
 
 // ミキサー
-VSLIB_IMPORT int __stdcall VslibGetMixSample(HVSPRJ hVsprj, int* mixSample);
-VSLIB_IMPORT int __stdcall VslibGetMixData(HVSPRJ hVsprj, void* waveData, int bit, int channel, int index, int size);
-VSLIB_IMPORT int __stdcall VslibExportWaveFile(HVSPRJ hVsprj, char* fileName, int bit, int channel);
+VSLIB_IMPORT int __stdcall VslibGetMixSample( HVSPRJ hVsprj, int *mixSample );
+VSLIB_IMPORT int __stdcall VslibGetMixData( HVSPRJ hVsprj, void *waveData, int bit, int channel, int index, int size );
+VSLIB_IMPORT int __stdcall VslibExportWaveFile( HVSPRJ hVsprj, const char *fileName, int bit, int channel );
 
 // 単位変換
-VSLIB_IMPORT double __stdcall VslibCent2Freq(int cent);
-VSLIB_IMPORT int __stdcall VslibFreq2Cent(double freq);
-VSLIB_IMPORT double __stdcall VslibNoteNum2Freq(int noteNum);
-VSLIB_IMPORT int __stdcall VslibFreq2NoteNum(double freq);
+VSLIB_IMPORT double __stdcall VslibCent2Freq( int cent );
+VSLIB_IMPORT int __stdcall VslibFreq2Cent( double freq );
+VSLIB_IMPORT double __stdcall VslibNoteNum2Freq( int noteNum );
+VSLIB_IMPORT int __stdcall VslibFreq2NoteNum( double freq );
 
 // その他
-VSLIB_IMPORT int __stdcall VslibSetPitchArray(HVSPRJ hVsprj, int itemNum, int* pitData, int nPitData, double interval);
+VSLIB_IMPORT int __stdcall VslibSetPitchArray( HVSPRJ hVsprj, int itemNum, int *pitData, int nPitData, double interval );
 
 // ASAnalyzer
-VSLIB_IMPORT int __stdcall AS_GetDllVer(void);
-VSLIB_IMPORT double __stdcall AS_Cent2Freq(int cent, double freqa4);
-VSLIB_IMPORT int __stdcall AS_Freq2Cent(double freq, double freqa4);
-VSLIB_IMPORT double __stdcall AS_Nnum2Freq(int nnum, double freqa4);
-VSLIB_IMPORT int __stdcall AS_Freq2Nnum(double freq, double freqa4);
+VSLIB_IMPORT int __stdcall AS_GetDllVer( void );
+VSLIB_IMPORT double __stdcall AS_Cent2Freq( int cent, double freqa4 );
+VSLIB_IMPORT int __stdcall AS_Freq2Cent( double freq, double freqa4 );
+VSLIB_IMPORT double __stdcall AS_Nnum2Freq( int nnum, double freqa4 );
+VSLIB_IMPORT int __stdcall AS_Freq2Nnum( double freq, double freqa4 );
 
-VSLIB_IMPORT int __stdcall AS_AnalyzeWaveData(void* wavdata, unsigned short sndspc[], int* pitch, int wavdatasize,
-	int wavsampleps, int wavbit, int wavchannel, int nnoffset, int nnrange, int blockpn, int targetch, double freqa4);
-VSLIB_IMPORT int __stdcall AS_AnalyzeWaveDataEX(void* wavdata, unsigned short* sndspc,
-	int* pitch, int* dynamics, AWDINFO* awdi, double freqa4);
-VSLIB_IMPORT int __stdcall AS_AnalyzeWaveFile(char* wavfile, char* txtfile, int blockps, int nnoffset, int nnrange);
-
+VSLIB_IMPORT int __stdcall AS_AnalyzeWaveData( void *wavdata, unsigned short sndspc[], int *pitch, int wavdatasize,
+	int wavsampleps, int wavbit, int wavchannel, int nnoffset, int nnrange, int blockpn, int targetch, double freqa4 );
+VSLIB_IMPORT int __stdcall AS_AnalyzeWaveDataEX( void *wavdata, unsigned short *sndspc,
+	int *pitch, int *dynamics, AWDINFO *awdi, double freqa4 );
+VSLIB_IMPORT int __stdcall AS_AnalyzeWaveFile( char *wavfile, char *txtfile, int blockps, int nnoffset, int nnrange );
 
 #endif /* _VSLIB_H_ */
-

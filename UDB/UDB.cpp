@@ -26,9 +26,9 @@ int main(int argc, char* argv[]) {
 	if (argc <= 1) {
 		SetColor(14);
 		printf(" -------------------------------\n");
-		printf("|         UDB ver 0.0.2         |\n");
-		printf("| Copyright(C) 2019 GloomyGhost |\n");
-		printf("| Copyright(C) 2014 AckieSound  |\n");
+		printf("|         UDB ver 0.0.3         |\n");
+		printf("| Copyright(C) 2020 GloomyGhost |\n");
+		printf("| Copyright(C) 2020 AckieSound  |\n");
 		printf(" -------------------------------\n");
 		printf("|    请问是在UTAU内运行了吗？   |\n");
 		printf("|    UDB只能在UTAU里调用哦OwO   |\n");

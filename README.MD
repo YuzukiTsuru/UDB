@@ -41,4 +41,25 @@ Debug内容 | ("D",基本值0)
 - [vslib](http://ackiesound.ifdef.jp/download.html)
 - [vs4u](<http://ackiesound.ifdef.jp/download.html>)
 
-  
+Readme on vs4u
+
+```
+ =========================================================================
+ 【   名  称   】 VS4U ソースコード
+ 【  公 開 日  】 2014/08/30
+ 【   作  者   】 あっきー
+ 【  連 絡 先  】 ackiesound@hotmail.co.jp
+ =========================================================================
+【概要】
+  VS4Uのソースコードです。
+  コンパイルにはVocalShifterライブラリver.1.32が必要です。
+  個人の非商用利用に限り、自由に利用できます。
+  改変したものを公開する際は、VS4Uを改変したものであることをreadme等に記載してください。
+
+【その他】
+  バグ、ご意見、ご要望等ありましたらメールでお知らせください。
+  あっきー
+  メールアドレス : ackiesound@hotmail.co.jp
+  Ackie Sound    : http://ackiesound.ifdef.jp/
+  サポート掲示板 : http://ackiesound.bbs.fc2.com/
+```

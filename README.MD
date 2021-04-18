@@ -111,7 +111,7 @@ Debug output | ("D", 0)
 - [vslib](http://ackiesound.ifdef.jp/download.html)
 - [vs4u](<http://ackiesound.ifdef.jp/download.html>)
 
-Readme on vs4u
+Readme on vs4u lib
 
 ```
  =========================================================================

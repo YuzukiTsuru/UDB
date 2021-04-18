@@ -12,21 +12,20 @@
 #include "udb.h"
 
 
-void pause() {
-	system("pause");
-}
+void pause() { system("pause"); }
 
 
 //--------------------------------------------------------------
 // 主要内容
 //--------------------------------------------------------------
-int main(int argc, char* argv[]) {
-
+int main(int argc, char* argv[])
+{
 	// 看代码就懂
-	if (argc <= 1) {
+	if (argc <= 1)
+	{
 		SetColor(14);
 		printf(" -------------------------------\n");
-		printf("|         UDB ver 0.0.3         |\n");
+		printf("|        UDB ver 0.0.3.1        |\n");
 		printf("| Copyright(C) 2020 GloomyGhost |\n");
 		printf("| Copyright(C) 2020 AckieSound  |\n");
 		printf(" -------------------------------\n");
@@ -45,19 +44,13 @@ int main(int argc, char* argv[]) {
 
 	// 选项设置
 	UDBOPTION option;
-	if (UDBGetOption(argc, argv, &option) != 0) {
-		return 0;
-	}
+	if (UDBGetOption(argc, argv, &option) != 0) { return 0; }
 
 	// 间距，时间，伸展
-	if (UDBStep1(&option) != 0) {
-		return 0;
-	}
+	if (UDBStep1(&option) != 0) { return 0; }
 
 	// 过滤器、音量
-	if (UDBStep2(&option) != 0) {
-		return 0;
-	}
+	if (UDBStep2(&option) != 0) { return 0; }
 
 
 	// 完成时间获取
@@ -68,14 +61,12 @@ int main(int argc, char* argv[]) {
 	printf("参数个数：%d\n", argc);
 	SetColor(15);
 
-	if (argc != 14 && argc != 13) {
+	if (argc != 14 && argc != 13)
+	{
 		SetColor(4);
 		printf("输入错误，请检查相关参数\n");
 		SetColor(15);
-		for (int i = 0; i < argc; i++)
-		{
-			printf(" %s ", argv[i]);
-		}
+		for (int i = 0; i < argc; i++) { printf(" %s ", argv[i]); }
 		pause();
 	}
 	else

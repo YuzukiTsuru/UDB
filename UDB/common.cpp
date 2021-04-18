@@ -27,12 +27,8 @@
 //--------------------------------------------------------------
 double LimitDoubleValue(double value, double min, double max)
 {
-	if (value < min) {
-		value = min;
-	}
-	else if (value > max) {
-		value = max;
-	}
+	if (value < min) { value = min; }
+	else if (value > max) { value = max; }
 	return value;
 }
 
@@ -52,12 +48,8 @@ double LimitDoubleValue(double value, double min, double max)
 //--------------------------------------------------------------
 int LimitIntValue(int value, int min, int max)
 {
-	if (value < min) {
-		value = min;
-	}
-	else if (value > max) {
-		value = max;
-	}
+	if (value < min) { value = min; }
+	else if (value > max) { value = max; }
 	return value;
 }
 
@@ -81,11 +73,11 @@ void AddExtStr(char* dstStr, int dstSize, char* extStr)
 	int len = strlen(dstStr);
 
 	//文件名的扩展名“.”转换为“_”
-	for (int i = len - 1; i >= 0; i--) {
-		if (dstStr[i] == '\\') {
-			break;
-		}
-		if (dstStr[i] == '.') {
+	for (int i = len - 1; i >= 0; i--)
+	{
+		if (dstStr[i] == '\\') { break; }
+		if (dstStr[i] == '.')
+		{
 			dstStr[i] = '_';
 			break;
 		}
@@ -114,7 +106,8 @@ int CheckFileExist(char* fileName)
 	FILE* fp;
 
 	fopen_s(&fp, fileName, "rb");
-	if (fp != NULL) {
+	if (fp != NULL)
+	{
 		fclose(fp);
 		existFlg = 1;
 	}
@@ -144,7 +137,4 @@ int CheckFileExist(char* fileName)
 //  13 - LIGHTMAGENTA 淡洋红 14 - YELLOW 黄
 //  15 - WHITE 白
 //--------------------------------------------------------------
-void SetColor(unsigned short color_index)
-{
-	SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), color_index);
-}
+void SetColor(unsigned short color_index) { SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), color_index); }

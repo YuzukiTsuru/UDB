@@ -1,4 +1,3 @@
-
 //--------------------------------------------------------------
 // VOL
 //--------------------------------------------------------------
@@ -70,15 +69,9 @@ int UDBLowPassFilter(UDBOPTION* option)
 	// H : 100  50  20  10
 	// f :  2k  4k 10k 20k
 	double freq = 16000.0;
-	if (option->lowPassfilter > 0) {
-		freq = 200000.0 / option->lowPassfilter;
-	}
-	if (freq > 16000.0) {
-		freq = 16000.0;
-	}
-	if (freq > sampFreq * 0.40) {
-		freq = sampFreq * 0.40;
-	}
+	if (option->lowPassfilter > 0) { freq = 200000.0 / option->lowPassfilter; }
+	if (freq > 16000.0) { freq = 16000.0; }
+	if (freq > sampFreq * 0.40) { freq = sampFreq * 0.40; }
 
 	// 过滤器系数计算
 	double q = 1.0 / sqrt(2.0);
@@ -95,7 +88,8 @@ int UDBLowPassFilter(UDBOPTION* option)
 	double y0 = 0.0, y1 = 0.0, y2 = 0.0;
 
 	// 过滤
-	for (int i = 0; i < nSample; i++) {
+	for (int i = 0; i < nSample; i++)
+	{
 		x2 = x1;
 		x1 = x0;
 		y2 = y1;
@@ -103,18 +97,16 @@ int UDBLowPassFilter(UDBOPTION* option)
 		x0 = waveData[i];
 		y0 = b0 * x0 + b1 * x1 + b2 * x2 - a1 * y1 - a2 * y2;
 
-		if (y0 >= 0) {
+		if (y0 >= 0)
+		{
 			int v = (int)(y0 + 0.5);
-			if (v > 32767) {
-				v = 32767;
-			}
+			if (v > 32767) { v = 32767; }
 			waveData[i] = (short)v;
 		}
-		else {
+		else
+		{
 			int v = (int)(y0 - 0.5);
-			if (v < -32768) {
-				v = -32768;
-			}
+			if (v < -32768) { v = -32768; }
 			waveData[i] = (short)v;
 		}
 	}
@@ -143,35 +135,34 @@ int UDBVolume(UDBOPTION* option)
 
 	// 最大音量测量
 	int dynMax = 0;
-	for (int i = 0; i < nSample; i++) {
+	for (int i = 0; i < nSample; i++)
+	{
 		int dyn = abs(waveData[i]);
-		if (dyn > dynMax) {
-			dynMax = dyn;
-		}
+		if (dyn > dynMax) { dynMax = dyn; }
 	}
 
 	// 音量调整
-	if (dynMax != 0) {
+	if (dynMax != 0)
+	{
 		double volume = option->volume / 100.0;
 		double peekCmp = option->peekCmp / 100.0;
 		double v1 = volume;
 		double v2 = volume * 16384 / dynMax;
 		double v3 = v2 * peekCmp + v1 * (1.0 - peekCmp);
 
-		for (int i = 0; i < nSample; i++) {
+		for (int i = 0; i < nSample; i++)
+		{
 			double w = waveData[i] * v3;
-			if (w >= 0) {
+			if (w >= 0)
+			{
 				int v = (int)(w + 0.5);
-				if (v > 32767) {
-					v = 32767;
-				}
+				if (v > 32767) { v = 32767; }
 				waveData[i] = (short)v;
 			}
-			else {
+			else
+			{
 				int v = (int)(w - 0.5);
-				if (v < -32768) {
-					v = -32768;
-				}
+				if (v < -32768) { v = -32768; }
 				waveData[i] = (short)v;
 			}
 		}
@@ -205,16 +196,17 @@ int UDBOutputWaveFile(UDBOPTION* option)
 	int channel = 1;
 	int datasize = nSample * (bit / 8) * channel;
 
-	FILE * fpOut;
+	FILE* fpOut;
 	fopen_s(&fpOut, option->outputWaveFile, "wb");
 
-	if (fpOut != NULL) {
+	if (fpOut != NULL)
+	{
 		//创建头部
 		char header[44];
-		*(int*)(header + 0) = 0x46464952;	    // "RIFF"
-		*(int*)(header + 4) = 36 + datasize;	// 文件大小- 8
-		*(int*)(header + 8) = 0x45564157;	    // "WAVE"
-		*(int*)(header + 12) = 0x20746d66;	    // "fmt "
+		*(int*)(header + 0) = 0x46464952; // "RIFF"
+		*(int*)(header + 4) = 36 + datasize; // 文件大小- 8
+		*(int*)(header + 8) = 0x45564157; // "WAVE"
+		*(int*)(header + 12) = 0x20746d66; // "fmt "
 		*(int*)(header + 16) = 16;
 		*(short*)(header + 20) = (short)WAVE_FORMAT_PCM;
 		*(short*)(header + 22) = (short)channel;
@@ -222,10 +214,10 @@ int UDBOutputWaveFile(UDBOPTION* option)
 		*(int*)(header + 28) = sampFreq * channel * (bit / 8);
 		*(short*)(header + 32) = (short)(channel * (bit / 8));
 		*(short*)(header + 34) = (short)bit;
-		*(int*)(header + 36) = 0x61746164;	   // "data"
-		*(int*)(header + 40) = datasize;	   // datasize
+		*(int*)(header + 36) = 0x61746164; // "data"
+		*(int*)(header + 40) = datasize; // datasize
 
-											   // 标头写入
+		// 标头写入
 		fseek(fpOut, 0, SEEK_SET);
 		fwrite(header, sizeof(char), 44, fpOut);
 
@@ -236,7 +228,8 @@ int UDBOutputWaveFile(UDBOPTION* option)
 		// 关闭输出文件
 		fclose(fpOut);
 	}
-	else {
+	else
+	{
 		SetColor(12);
 		printf("UDB:啊啊啊啊啊！！文件输出错误了QAQ\n");
 		SetColor(15);
@@ -245,4 +238,3 @@ int UDBOutputWaveFile(UDBOPTION* option)
 	}
 	return retVal;
 }
-

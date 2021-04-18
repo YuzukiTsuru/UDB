@@ -32,10 +32,7 @@ int UDBStep1(UDBOPTION* option)
 
 	// 创建项目
 	HVSPRJ hVsprj = UDBLoadProject(option);
-	if (hVsprj == NULL)
-	{
-		return 1;
-	}
+	if (hVsprj == NULL) { return 1; }
 
 	// 时间伸展设定
 	UDBSetTimeStretchPrm(hVsprj, option);
@@ -70,8 +67,8 @@ int UDBStep1(UDBOPTION* option)
 	}
 
 	// EQ设置
-	int eq1[15] = { 0, 0, 0, 0, 0, 0, 0, 20, 60, 100, 120, 120, 80,   0,   0 };
-	int eq2[15] = { 0, 0, 0, 0, 0, 0, 0,  0,  0,   0,   0,   0, 40, 120, 120 };
+	int eq1[15] = {0, 0, 0, 0, 0, 0, 0, 20, 60, 100, 120, 120, 80, 0, 0};
+	int eq2[15] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 40, 120, 120};
 	VslibSetEQGain(hVsprj, 0, 0, eq1);
 	VslibSetEQGain(hVsprj, 0, 1, eq2);
 
@@ -80,7 +77,8 @@ int UDBStep1(UDBOPTION* option)
 	int nCtrlPnt = vsItemInfo.ctrlPntNum;
 
 	// 控制点参数设置
-	for (int i = 0; i < nCtrlPnt; i++) {
+	for (int i = 0; i < nCtrlPnt; i++)
+	{
 		// 取得控制分数
 		VSCPINFOEX vsCpInfo;
 		VslibGetCtrlPntInfoEx(hVsprj, 0, i, &vsCpInfo);
@@ -111,9 +109,7 @@ int UDBStep1(UDBOPTION* option)
 	VslibGetMixData(hVsprj, option->tmpWaveData, 16, 1, 0, option->tmpSample);
 
 	// 项目文件输出
-	if (option->outputVshpFlg == 12345) {
-		VslibSaveProject(hVsprj, option->gFile);
-	}
+	if (option->outputVshpFlg == 12345) { VslibSaveProject(hVsprj, option->gFile); }
 
 	// 删除项目
 	VslibDeleteProject(hVsprj);
@@ -136,18 +132,17 @@ int UDBStep1(UDBOPTION* option)
 //  如果没有单独的频率表的情况下制作。
 //  如果失败了返回NULL。
 //--------------------------------------------------------------
-HVSPRJ UDBLoadProject(UDBOPTION * option)
+HVSPRJ UDBLoadProject(UDBOPTION* option)
 {
 	int sta;
 
 	// WAVE文件存在检查
-	if (CheckFileExist(option->inputWaveFile) == 0) {
+	if (CheckFileExist(option->inputWaveFile) == 0)
+	{
 		SetColor(12);
 		printf("UDB:哇！我没有在音源里找到这个发音，我没办法生成了啦QAQ,缺少的发音是:%s\n", option->inputWaveFile);
 		SetColor(15);
-		if (option->ShowOption == 1) {
-			system("pause");
-		}
+		if (option->ShowOption == 1) { system("pause"); }
 		return NULL;
 	}
 
@@ -160,26 +155,26 @@ HVSPRJ UDBLoadProject(UDBOPTION * option)
 	// 创建项目
 	HVSPRJ hVsprj = NULL;
 
-	if (option->reGenerateFrqFlg != 0) {
-		existVsfrqFlg = 0;
-	}
-	else {
-		if (existVsfrqFlg != 0) {
+	if (option->reGenerateFrqFlg != 0) { existVsfrqFlg = 0; }
+	else
+	{
+		if (existVsfrqFlg != 0)
+		{
 			// 读取自己的频率表
 			sta = VslibOpenProject(&hVsprj, option->GfrqFile);
-			if (sta != VSERR_NOERR) {
+			if (sta != VSERR_NOERR)
+			{
 				SetColor(12);
 				printf("UDB:我在读取我自己的Gfrq的时候发现好像频率表错误了，Master检查下吧！或者删了频率表我重新生成一个OwO\n");
 				SetColor(15);
-				if (option->ShowOption == 1) {
-					system("pause");
-				}
+				if (option->ShowOption == 1) { system("pause"); }
 				existVsfrqFlg = 0;
 			}
 		}
 	}
 
-	if (existVsfrqFlg == 0) {
+	if (existVsfrqFlg == 0)
+	{
 		// 创建独自的频率表（Gfrq）
 		SetColor(11);
 		printf("UDB:创建UDB自己用的一个小频率表OwO\n");
@@ -187,43 +182,38 @@ HVSPRJ UDBLoadProject(UDBOPTION * option)
 
 		// 创建项目
 		sta = VslibCreateProject(&hVsprj);
-		if (sta != VSERR_NOERR) {
+		if (sta != VSERR_NOERR)
+		{
 			SetColor(12);
 			printf("UDB:哇，居然初始化错误，我也不知道什么原因，好难受\n");
 			SetColor(15);
-			if (option->ShowOption == 1) {
-				system("pause");
-			}
+			if (option->ShowOption == 1) { system("pause"); }
 			return NULL;
 		}
 
 		// 输入文件到项目中
 		int itemNum;
 		sta = VslibAddItemEx(hVsprj, option->inputWaveFile, &itemNum, 36, 48, 0);
-		if (sta != VSERR_NOERR) {
+		if (sta != VSERR_NOERR)
+		{
 			SetColor(12);
 			printf("UDB:文件输入错误了QAQ\n");
 			SetColor(15);
-			if (option->ShowOption == 1) {
-				system("pause");
-			}
+			if (option->ShowOption == 1) { system("pause"); }
 			return NULL;
 		}
 
 		// 使用标准频率表来设置频率
-		if (existFrqFlg != 0) {
-			UDBLoadFrqFile(hVsprj, option);
-		}
+		if (existFrqFlg != 0) { UDBLoadFrqFile(hVsprj, option); }
 
 		// 独立频率表保存
 		sta = VslibSaveProject(hVsprj, option->GfrqFile);
-		if (sta != VSERR_NOERR) {
+		if (sta != VSERR_NOERR)
+		{
 			SetColor(12);
 			printf("UDB:哇。。保存频率表失败惹，Master帮我检查下呗QAQ(可能是文件夹没有写入权限导致的）\n");
 			SetColor(15);
-			if (option->ShowOption == 1) {
-				system("pause");
-			}
+			if (option->ShowOption == 1) { system("pause"); }
 		}
 		else
 		{
@@ -250,7 +240,7 @@ HVSPRJ UDBLoadProject(UDBOPTION * option)
 // 概要
 //  利用标准频率表设置间距解析值。
 //--------------------------------------------------------------
-int UDBLoadFrqFile(HVSPRJ hVsprj, UDBOPTION * option)
+int UDBLoadFrqFile(HVSPRJ hVsprj, UDBOPTION* option)
 {
 	VSPRJINFO vsPrjInfo;
 	VSITEMINFO vsItemInfo;
@@ -259,7 +249,8 @@ int UDBLoadFrqFile(HVSPRJ hVsprj, UDBOPTION * option)
 	FILE* fpFrq;
 	fopen_s(&fpFrq, option->frqFile, "rb");
 
-	if (fpFrq != NULL) {
+	if (fpFrq != NULL)
+	{
 		// 数据间隔[样本]
 		int itvSmp = 256;
 		fseek(fpFrq, 8, SEEK_SET);
@@ -277,13 +268,12 @@ int UDBLoadFrqFile(HVSPRJ hVsprj, UDBOPTION * option)
 
 		// 频率数据
 		FREQDATA* freqData = (FREQDATA*)calloc(nData, sizeof(FREQDATA));
-		if (freqData == nullptr) {
+		if (freqData == nullptr)
+		{
 			SetColor(12);
 			printf("读取频率表错误！终止。QAQ\n");
 			SetColor(15);
-			if (option->ShowOption == 1) {
-				system("pause");
-			}
+			if (option->ShowOption == 1) { system("pause"); }
 			return -1;
 		}
 		else
@@ -299,30 +289,33 @@ int UDBLoadFrqFile(HVSPRJ hVsprj, UDBOPTION * option)
 		// 抽样频率取得
 		VslibGetProjectInfo(hVsprj, &vsPrjInfo);
 		int sampFreq = vsPrjInfo.sampFreq;
-		double cpSec = 1.0 / vsItemInfo.ctrlPntPs;	// 控制点的秒数
+		double cpSec = 1.0 / vsItemInfo.ctrlPntPs; // 控制点的秒数
 
-													// 频率设置
-		for (int i = 0; i < nCtrlPnt; i++) {
+		// 频率设置
+		for (int i = 0; i < nCtrlPnt; i++)
+		{
 			// 在标准频率表上计算点
 			double smp = i * cpSec * sampFreq;
 			int pnt = (int)(smp / itvSmp);
 
 			// 频率设置
 			double freq = 0.0;
-			if ((pnt >= 0) && (pnt < nData)) {
-				freq = freqData[pnt].freq;
-			}
+			if ((pnt >= 0) && (pnt < nData)) { freq = freqData[pnt].freq; }
 
-			if (freq > 55.0) {	// 间距
-								// 设定编辑前间距和无间距的标志
+			if (freq > 55.0)
+			{
+				// 间距
+				// 设定编辑前间距和无间距的标志
 				VSCPINFOEX vsCpInfo;
 				VslibGetCtrlPntInfoEx(hVsprj, 0, i, &vsCpInfo);
 				vsCpInfo.pitOrg = (int)(log(freq / 440.0) / log(2.0) * 1200.0) + 6900;
 				vsCpInfo.pitFlgEdit = 1;
 				VslibSetCtrlPntInfoEx(hVsprj, 0, i, &vsCpInfo);
 			}
-			else {				// 无间距
-								// 设定编辑前间距和无间距的标志
+			else
+			{
+				// 无间距
+				// 设定编辑前间距和无间距的标志
 				VSCPINFOEX vsCpInfo;
 				VslibGetCtrlPntInfoEx(hVsprj, 0, i, &vsCpInfo);
 				vsCpInfo.pitOrg = (int)(log(keyFreq / 440.0) / log(2.0) * 1200.0) + 6900;
@@ -338,9 +331,7 @@ int UDBLoadFrqFile(HVSPRJ hVsprj, UDBOPTION * option)
 		// 关闭文件
 		fclose(fpFrq);
 	}
-	else {
-		retVal = 1;
-	}
+	else { retVal = 1; }
 
 	return retVal;
 }
@@ -359,7 +350,7 @@ int UDBLoadFrqFile(HVSPRJ hVsprj, UDBOPTION * option)
 // 概要
 //  时间伸展设定。
 //--------------------------------------------------------------
-int UDBSetTimeStretchPrm(HVSPRJ hVsprj, UDBOPTION * option)
+int UDBSetTimeStretchPrm(HVSPRJ hVsprj, UDBOPTION* option)
 {
 	VSPRJINFO vsPrjInfo;
 	VSITEMINFO vsItemInfo;
@@ -370,29 +361,29 @@ int UDBSetTimeStretchPrm(HVSPRJ hVsprj, UDBOPTION * option)
 
 	// 获取项目信息
 	VslibGetItemInfo(hVsprj, 0, &vsItemInfo);
-	double orgSmp = vsItemInfo.sampleOrg;					// 源样本数
-	double offsetSmp = option->offset * 0.001 * sampFreq;		// 偏移的样本数
-	double fixedSmp = option->fixedLength * 0.001 * sampFreq;	// 子音部的样本数
-	double endBlankSmp = option->endBlank * 0.001 * sampFreq;	// blank的样本数
-	double reqSmp = option->reqLength * 0.001 * sampFreq;		// 要求长度的样本数
+	double orgSmp = vsItemInfo.sampleOrg; // 源样本数
+	double offsetSmp = option->offset * 0.001 * sampFreq; // 偏移的样本数
+	double fixedSmp = option->fixedLength * 0.001 * sampFreq; // 子音部的样本数
+	double endBlankSmp = option->endBlank * 0.001 * sampFreq; // blank的样本数
+	double reqSmp = option->reqLength * 0.001 * sampFreq; // 要求长度的样本数
 
-															// blank以负（从偏移的相对值）转换为从结尾处的空白
-	if (endBlankSmp < 0) {
-		endBlankSmp = orgSmp - offsetSmp + endBlankSmp;
-	}
+	// blank以负（从偏移的相对值）转换为从结尾处的空白
+	if (endBlankSmp < 0) { endBlankSmp = orgSmp - offsetSmp + endBlankSmp; }
 
 	// 子音部的伸展倍率
 	double fixStretch = pow(2.0, 1.0 - option->fixSpeed / 100.0);
 
 	// 添加定时控制点
-	if (reqSmp >= fixedSmp * fixStretch) {
+	if (reqSmp >= fixedSmp * fixStretch)
+	{
 		// 要求长超过子音部
 		VslibSetTimeCtrlPnt(hVsprj, 0, 1, (int)orgSmp, (int)reqSmp);
 		VslibAddTimeCtrlPnt(hVsprj, 0, (int)(orgSmp - endBlankSmp), (int)reqSmp);
 		VslibAddTimeCtrlPnt(hVsprj, 0, (int)(offsetSmp + fixedSmp), (int)(fixedSmp * fixStretch));
 		VslibAddTimeCtrlPnt(hVsprj, 0, (int)offsetSmp, 0);
 	}
-	else {
+	else
+	{
 		// 要求长未满子音部
 		VslibSetTimeCtrlPnt(hVsprj, 0, 1, (int)orgSmp, (int)reqSmp);
 		VslibAddTimeCtrlPnt(hVsprj, 0, (int)(offsetSmp + reqSmp / fixStretch), (int)reqSmp);
@@ -416,7 +407,7 @@ int UDBSetTimeStretchPrm(HVSPRJ hVsprj, UDBOPTION * option)
 // 概要
 //  计算母音部分的间距平均值计算。
 //--------------------------------------------------------------
-int UDBCalcAveragePit(HVSPRJ hVsprj, UDBOPTION * option)
+int UDBCalcAveragePit(HVSPRJ hVsprj, UDBOPTION* option)
 {
 	VSITEMINFO vsItemInfo;
 
@@ -436,36 +427,39 @@ int UDBCalcAveragePit(HVSPRJ hVsprj, UDBOPTION * option)
 	// 母音的间距平均值计算
 	int pitSum = 0;
 	int count = 0;
-	for (int i = startPnt; i < endPnt; i++) {
+	for (int i = startPnt; i < endPnt; i++)
+	{
 		VSCPINFOEX vsCpInfo;
 		VslibGetCtrlPntInfoEx(hVsprj, 0, i, &vsCpInfo);
-		if (vsCpInfo.pitFlgEdit == 1) {	// 只有间距的部分计数
+		if (vsCpInfo.pitFlgEdit == 1)
+		{
+			// 只有间距的部分计数
 			pitSum += vsCpInfo.pitOrg;
 			count++;
 		}
 	}
 	int pitAverage = 6000;
-	if (count != 0) {
-		pitAverage = pitSum / count;
-	}
+	if (count != 0) { pitAverage = pitSum / count; }
 
 	// 母音的间距平均值计算（第二次）
 	pitSum = 0;
 	count = 0;
-	for (int i = startPnt; i < endPnt; i++) {
+	for (int i = startPnt; i < endPnt; i++)
+	{
 		VSCPINFOEX vsCpInfo;
 		VslibGetCtrlPntInfoEx(hVsprj, 0, i, &vsCpInfo);
-		if (vsCpInfo.pitFlgEdit == 1) {	// 只有间距的部分计数
-			if (abs(vsCpInfo.pitOrg - pitAverage) < 200) {
+		if (vsCpInfo.pitFlgEdit == 1)
+		{
+			// 只有间距的部分计数
+			if (abs(vsCpInfo.pitOrg - pitAverage) < 200)
+			{
 				pitSum += vsCpInfo.pitOrg;
 				count++;
 			}
 		}
 	}
 	pitAverage = 6000;
-	if (count != 0) {
-		pitAverage = pitSum / count;
-	}
+	if (count != 0) { pitAverage = pitSum / count; }
 
 	return pitAverage;
 }
@@ -484,7 +478,7 @@ int UDBCalcAveragePit(HVSPRJ hVsprj, UDBOPTION * option)
 // 概要
 //  设定间距参数。
 //--------------------------------------------------------------
-int UDBSetPitPrm(HVSPRJ hVsprj, UDBOPTION * option)
+int UDBSetPitPrm(HVSPRJ hVsprj, UDBOPTION* option)
 {
 	VSPRJINFO vsPrjInfo;
 	VSITEMINFO vsItemInfo;
@@ -508,13 +502,15 @@ int UDBSetPitPrm(HVSPRJ hVsprj, UDBOPTION * option)
 
 	// 计算间距[秒单位]的间距
 	double pbitvSec = 256.0 / sampFreq;
-	if (option->tempo > 0.0) {
-		pbitvSec = 60.0 / option->tempo / 96;	// 4分音符1/96秒
+	if (option->tempo > 0.0)
+	{
+		pbitvSec = 60.0 / option->tempo / 96; // 4分音符1/96秒
 	}
 
 	if ((option->disablePitchShift == -1) || (option->disablePitchShift == -2))
 	{
-		for (int i = 0; i < nCtrlPnt; i++) {
+		for (int i = 0; i < nCtrlPnt; i++)
+		{
 			// 间距设置
 			VSCPINFOEX vsCpInfo;
 			VslibGetCtrlPntInfoEx(hVsprj, 0, i, &vsCpInfo);
@@ -525,7 +521,8 @@ int UDBSetPitPrm(HVSPRJ hVsprj, UDBOPTION * option)
 	else
 	{
 		// 编辑后的间距参数设置
-		for (int i = 0; i < nCtrlPnt; i++) {
+		for (int i = 0; i < nCtrlPnt; i++)
+		{
 			// 编辑后的位置（秒单位）计算
 			double edtSec;
 			VslibGetStretchEditSec(hVsprj, 0, i * ctrpntSec, &edtSec);
@@ -533,9 +530,7 @@ int UDBSetPitPrm(HVSPRJ hVsprj, UDBOPTION * option)
 			// 间距计算
 			int bendPnt = (int)(edtSec / pbitvSec);
 			int bend = 0;
-			if ((bendPnt >= 0) && (bendPnt < option->nPitchBend)) {
-				bend = option->pitchBend[bendPnt];
-			}
+			if ((bendPnt >= 0) && (bendPnt < option->nPitchBend)) { bend = option->pitchBend[bendPnt]; }
 
 			// 间距设置
 			VSCPINFOEX vsCpInfo;
@@ -555,7 +550,8 @@ int UDBSetPitPrm(HVSPRJ hVsprj, UDBOPTION * option)
 		double mixSec = (double)mixSample / sampFreq;
 		int nPitchBend = (int)(mixSec / pbitvSec) + 1;
 
-		for (int i = 0; i < nPitchBend; i++) {
+		for (int i = 0; i < nPitchBend; i++)
+		{
 			// 计算对应于间距数据位置的控制点号码
 			double orgSec;
 			double edtSec = LimitDoubleValue(i * pbitvSec, 0.0, mixSec);
@@ -581,4 +577,3 @@ int UDBSetPitPrm(HVSPRJ hVsprj, UDBOPTION * option)
 
 	return 0;
 }
-

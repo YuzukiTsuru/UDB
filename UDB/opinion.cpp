@@ -1,4 +1,3 @@
-
 //--------------------------------------------------------------
 // 设置文件
 //--------------------------------------------------------------
@@ -29,7 +28,6 @@
 //--------------------------------------------------------------
 int UDBGetOption(int argc, char* argv[], UDBOPTION* option)
 {
-
 	// 选项初始化
 	memset(option, 0, sizeof(UDBOPTION));
 	option->peekCmp = 86;
@@ -69,9 +67,7 @@ int UDBGetOption(int argc, char* argv[], UDBOPTION* option)
 	option->modulation = LimitDoubleValue(atof(argv[11]), -400.0, 400.0);
 
 	// 12～13.间距
-	if (argc >= 13) {
-		UDBSetPitchBendOption(argv, option);
-	}
+	if (argc >= 13) { UDBSetPitchBendOption(argv, option); }
 
 	// 独立频率表文件名设置
 	strcpy_s(option->GfrqFile, UDB_MAX_PATH, option->inputWaveFile);
@@ -103,17 +99,16 @@ int UDBGetOption(int argc, char* argv[], UDBOPTION* option)
 //--------------------------------------------------------------
 int UDBCnvNoteNum(char* nnStr)
 {
-	int noteNum = 0;		// 号码
-	int octStrOffset = 1;	// 字符INDEX
+	int noteNum = 0; // 号码
+	int octStrOffset = 1; // 字符INDEX
 
-							// 检查音阶名文字长度
+	// 检查音阶名文字长度
 	int length = strlen(nnStr);
-	if (length < 2) {
-		return 60;
-	}
+	if (length < 2) { return 60; }
 
 	// 把音阶名转换成号码
-	switch (nnStr[0]) {
+	switch (nnStr[0])
+	{
 	case 'C':
 		noteNum = 0;
 		break;
@@ -141,20 +136,18 @@ int UDBCnvNoteNum(char* nnStr)
 	}
 
 	// #加上半个音
-	if (nnStr[1] == '#') {
+	if (nnStr[1] == '#')
+	{
 		noteNum++;
 		octStrOffset = 2;
 	}
 
 	// 转换轴
-	if (length > octStrOffset) {
+	if (length > octStrOffset)
+	{
 		int oct = nnStr[octStrOffset] - '0';
-		if (oct < 0) {
-			oct = 0;
-		}
-		else if (oct > 10) {
-			oct = 10;
-		}
+		if (oct < 0) { oct = 0; }
+		else if (oct > 10) { oct = 10; }
 		noteNum += (oct + 1) * 12;
 	}
 
@@ -174,17 +167,16 @@ int UDBCnvNoteNum(char* nnStr)
 // 概要
 //  标志文字列选项设置。
 //--------------------------------------------------------------
-int UDBSetFlgOption(char* flgStr, UDBOPTION * option)
+int UDBSetFlgOption(char* flgStr, UDBOPTION* option)
 {
 	int length = strlen(flgStr);
 
 	// 设定
-	int offset = 0;	// 读出位置
-	for (;;) {
+	int offset = 0; // 读出位置
+	for (;;)
+	{
 		//判断结束
-		if (offset == length) {
-			break;
-		}
+		if (offset == length) { break; }
 
 		// 标志类别读取
 		char flg = flgStr[offset];
@@ -192,21 +184,19 @@ int UDBSetFlgOption(char* flgStr, UDBOPTION * option)
 
 		// 计算标志值的字符串长度
 		int valueLength = 0;
-		for (;;) {
+		for (;;)
+		{
 			// 到达终点
-			if (offset + valueLength == length) {
-				break;
-			}
+			if (offset + valueLength == length) { break; }
 			// 到下一个标志（字母）
-			if (isalpha(flgStr[offset + valueLength])) {
-				break;
-			}
+			if (isalpha(flgStr[offset + valueLength])) { break; }
 			valueLength++;
 		}
 
 		// 将标志值转换为数字
 		int valueData = 0;
-		if ((valueLength > 0) && (valueLength < 32)) {
+		if ((valueLength > 0) && (valueLength < 32))
+		{
 			char tmpStr[32];
 			memcpy_s(tmpStr, 32, flgStr + offset, valueLength);
 			tmpStr[valueLength] = 0;
@@ -215,7 +205,8 @@ int UDBSetFlgOption(char* flgStr, UDBOPTION * option)
 		}
 
 		// 标志设定
-		switch (flg) {
+		switch (flg)
+		{
 		case 'N':
 			option->noFormantFlg = 1;
 			break;
@@ -277,32 +268,21 @@ int UDBDecodeBase64(char* str)
 {
 	int value = 0;
 
-	for (int i = 0; i < 2; i++) {
+	for (int i = 0; i < 2; i++)
+	{
 		int c = str[i];
 		int v = 0;
 
-		if ((c >= 'A') && (c <= 'Z')) {
-			v = c - 'A';
-		}
-		else if ((c >= 'a') && (c <= 'z')) {
-			v = c - 'a' + 26;
-		}
-		else if ((c >= '0') && (c <= '9')) {
-			v = c - '0' + 52;
-		}
-		else if (c == '+') {
-			v = 62;
-		}
-		else if (c == '/') {
-			v = 63;
-		}
+		if ((c >= 'A') && (c <= 'Z')) { v = c - 'A'; }
+		else if ((c >= 'a') && (c <= 'z')) { v = c - 'a' + 26; }
+		else if ((c >= '0') && (c <= '9')) { v = c - '0' + 52; }
+		else if (c == '+') { v = 62; }
+		else if (c == '/') { v = 63; }
 
 		value = value * 64 + v;
 	}
 
-	if (value >= 2048) {
-		value -= 4096;
-	}
+	if (value >= 2048) { value -= 4096; }
 
 	return value;
 }
@@ -322,38 +302,39 @@ int UDBDecodeBase64(char* str)
 // 概要
 //  读取命令线引数，设置间距选项。
 //--------------------------------------------------------------
-int UDBSetPitchBendOption(char* argv[], UDBOPTION * option)
+int UDBSetPitchBendOption(char* argv[], UDBOPTION* option)
 {
 	char* pitchBendStr = argv[12];
 	option->tempo = 0.0;
 
 	// 节奏读取
-	if (pitchBendStr[0] == '!') {
+	if (pitchBendStr[0] == '!')
+	{
 		option->tempo = atof(pitchBendStr + 1);
 		pitchBendStr = argv[13];
 	}
 
 	// 读取间距的数据
-	int length = strlen(pitchBendStr);	// 文字长度
-	int nData = 0;		// 数据数
-	int offset = 0;		// 读取位置
-	int lastData = 0;	// 上次数据
+	int length = strlen(pitchBendStr); // 文字长度
+	int nData = 0; // 数据数
+	int offset = 0; // 读取位置
+	int lastData = 0; // 上次数据
 
-	for (;;) {
+	for (;;)
+	{
 		// 结束判断
-		if (offset >= length) {
-			break;
-		}
+		if (offset >= length) { break; }
 
-		if (pitchBendStr[offset] == '#') {
+		if (pitchBendStr[offset] == '#')
+		{
 			// 计算文字长
 			int i = offset + 1;
 			int offset2 = i;
-			for (;;) {
-				if (i == length) {
-					break;
-				}
-				if (pitchBendStr[i] == '#') {
+			for (;;)
+			{
+				if (i == length) { break; }
+				if (pitchBendStr[i] == '#')
+				{
 					offset2 = i;
 					break;
 				}
@@ -363,43 +344,40 @@ int UDBSetPitchBendOption(char* argv[], UDBOPTION * option)
 
 			// 算出，数据设置
 			int repNum = 0;
-			if (repNumLength < 8) {
+			if (repNumLength < 8)
+			{
 				char tmp[8];
 				memcpy_s(tmp, 8, pitchBendStr + offset + 1, repNumLength);
 				tmp[repNumLength] = NULL;
 				repNum = atoi(tmp);
-				for (int i = 0; i < repNum; i++) {
-					if (nData + i < UDB_PBSIZE) {
-						option->pitchBend[nData + i] = lastData;
-					}
-					else {
-						break;
-					}
+				for (int i = 0; i < repNum; i++)
+				{
+					if (nData + i < UDB_PBSIZE) { option->pitchBend[nData + i] = lastData; }
+					else { break; }
 				}
 			}
 
 			nData += repNum;
 			offset = offset2 + 1;
 		}
-		else {
+		else
+		{
 			// 直接指定
-			if (length >= offset + 2) {
+			if (length >= offset + 2)
+			{
 				lastData = UDBDecodeBase64(pitchBendStr + offset);
-				if (nData < UDB_PBSIZE) {
-					option->pitchBend[nData] = lastData;
-				}
+				if (nData < UDB_PBSIZE) { option->pitchBend[nData] = lastData; }
 				nData++;
 				offset += 2;
 			}
-			else {
-				break;
-			}
+			else { break; }
 		}
 	}
 
 
 	// 内容表示（debug）
-	if (option->ShowOption == 1) {
+	if (option->ShowOption == 1)
+	{
 		SetColor(9);
 		printf("\n\n");
 		printf("输入文件      ：%s\n", option->inputWaveFile);
@@ -417,13 +395,12 @@ int UDBSetPitchBendOption(char* argv[], UDBOPTION * option)
 	}
 
 	// 数据数设置
-	if (nData > UDB_PBSIZE) {
-		nData = UDB_PBSIZE;
-	}
+	if (nData > UDB_PBSIZE) { nData = UDB_PBSIZE; }
 	option->nPitchBend = nData;
 
 	return 0;
 }
+
 //--------------------------------------------------------------
 // 显示BPM
 //
@@ -436,7 +413,8 @@ int UDBSetPitchBendOption(char* argv[], UDBOPTION * option)
 // 概要
 //  读取命令线引数，输出BPM
 //--------------------------------------------------------------
-int ShowBPM(UDBOPTION * option) {
+int ShowBPM(UDBOPTION* option)
+{
 	printf("\nBPM:%f\n", option->fixSpeed);
 	return 0;
 }

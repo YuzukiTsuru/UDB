@@ -16,7 +16,7 @@
 //--------------------------------------------------------------
 // Pit变换
 //
-// 引数
+// 参数
 //  UDBOPTION *option	
 //
 // 返回
@@ -121,7 +121,7 @@ int UDBStep1(UDBOPTION* option)
 //--------------------------------------------------------------
 // 创建项目
 //
-// 引数
+// 参数
 //  UDBOPTION *option	选项
 //
 // 返回
@@ -230,7 +230,7 @@ HVSPRJ UDBLoadProject(UDBOPTION* option)
 //--------------------------------------------------------------
 // 使用标准频率表来设置频率
 //
-// 引数
+// 参数
 //  HVSPRJ hVsprj	
 //  UDBOPTION *option	
 //
@@ -340,7 +340,7 @@ int UDBLoadFrqFile(HVSPRJ hVsprj, UDBOPTION* option)
 //--------------------------------------------------------------
 // 时间伸展设定
 //
-// 引数
+// 参数
 //  HVSPRJ hVsprj	
 //  UDBOPTION *option	
 //
@@ -397,7 +397,7 @@ int UDBSetTimeStretchPrm(HVSPRJ hVsprj, UDBOPTION* option)
 //--------------------------------------------------------------
 // 母音部分的间距平均值计算
 //
-// 引数
+// 参数
 //  HVSPRJ hVsprj	
 //  UDBOPTION *option	
 //
@@ -468,7 +468,7 @@ int UDBCalcAveragePit(HVSPRJ hVsprj, UDBOPTION* option)
 //--------------------------------------------------------------
 // 间距设置
 //
-// 引数
+// 参数
 //  HVSPRJ hVsprj	
 //  UDBOPTION *option	
 //

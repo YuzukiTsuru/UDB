@@ -14,7 +14,7 @@
 //--------------------------------------------------------------
 // 实际数值范围限制
 //
-// 引数
+// 参数
 //  int value	实数
 //  int min		最小值
 //  int max		最大值
@@ -35,7 +35,7 @@ double LimitDoubleValue(double value, double min, double max)
 //--------------------------------------------------------------
 // 整数范围限制
 // 
-// 引数
+// 参数
 //  int value	制限対象值
 //	int min		最小值
 //	int max		最大值
@@ -57,7 +57,7 @@ int LimitIntValue(int value, int min, int max)
 //--------------------------------------------------------------
 // 扩展名附加
 //
-// 引数
+// 参数
 //  char *dstStr	文件名
 //  int dstSize		文件名缓冲大小
 //  char *extStr	扩展名
@@ -91,7 +91,7 @@ void AddExtStr(char* dstStr, int dstSize, char* extStr)
 //--------------------------------------------------------------
 // 确认文件存在
 //
-// 引数
+// 参数
 //  char *fileName	文件名
 //
 // 返回
@@ -119,7 +119,7 @@ int CheckFileExist(char* fileName)
 //--------------------------------------------------------------
 // 设置控制台颜色
 //
-// 引数
+// 参数
 //  unsigned short color_index 颜色名
 //
 // 返回
